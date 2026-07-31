@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "customboatmod",
+  "version": "${version}",
+  "name": "Custom Boat Mod",
+  "description": "Allows boats to fly when pressing the jump key.",
+  "authors": [
+    "YourName"
+  ],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.example.boatmod.CustomBoatClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

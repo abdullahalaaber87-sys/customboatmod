@@ -1,0 +1,19 @@
+# Gradle
+.gradle/
+build/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# IntelliJ IDEA
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+
+# Fabric
+run/
