@@ -5,9 +5,9 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import org.lwjgl.glfw.GLFW;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.util.math.Vec3d;
-import org.lwjgl.glfw.GLFW;
 
 public class CustomBoatClient implements ClientModInitializer {
 
@@ -21,11 +21,12 @@ public class CustomBoatClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
+        // تسجيل زر Right Shift - متوافق مع 1.21.11
         guiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.customboatmod.gui",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT_SHIFT,
-                "category.customboatmod"
+                "key.categories.misc"
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -51,7 +52,6 @@ public class CustomBoatClient implements ClientModInitializer {
                 double newX = clamp(vel.x * 1.05, -MAX_SPEED, MAX_SPEED);
                 double newZ = clamp(vel.z * 1.05, -MAX_SPEED, MAX_SPEED);
                 boat.setVelocity(new Vec3d(newX, FLY_SPEED, newZ));
-
             } else if (vel.y > 0) {
                 boat.setVelocity(vel.x, 0, vel.z);
             }
