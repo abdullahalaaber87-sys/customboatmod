@@ -11,20 +11,16 @@ import org.lwjgl.glfw.GLFW;
 
 public class CustomBoatClient implements ClientModInitializer {
 
-    // سرعة الصعود وأقصى سرعة أفقية
     private static final double FLY_SPEED = 0.4;
     private static final double MAX_SPEED = 1.2;
 
-    // حالة تفعيل الطيران (يتحكم فيها الـ GUI)
     public static boolean flyEnabled = false;
 
-    // زر فتح القائمة (Right Shift)
     private static KeyBinding guiKey;
 
     @Override
     public void onInitializeClient() {
 
-        // تسجيل زر Right Shift لفتح القائمة
         guiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.customboatmod.gui",
                 InputUtil.Type.KEYSYM,
@@ -36,7 +32,7 @@ public class CustomBoatClient implements ClientModInitializer {
 
             if (client.player == null || client.world == null) return;
 
-            // فتح القائمة عند ضغط Right Shift
+            // فتح/إغلاق القائمة
             while (guiKey.wasPressed()) {
                 if (client.currentScreen == null) {
                     client.setScreen(new ClickGuiScreen());
@@ -45,7 +41,6 @@ public class CustomBoatClient implements ClientModInitializer {
                 }
             }
 
-            // تطبيق الطيران فقط إذا كان مفعّلاً من القائمة
             if (!flyEnabled) return;
 
             if (!(client.player.getVehicle() instanceof BoatEntity boat)) return;
@@ -55,13 +50,10 @@ public class CustomBoatClient implements ClientModInitializer {
             if (client.options.jumpKey.isPressed()) {
                 double newX = clamp(vel.x * 1.05, -MAX_SPEED, MAX_SPEED);
                 double newZ = clamp(vel.z * 1.05, -MAX_SPEED, MAX_SPEED);
-
                 boat.setVelocity(new Vec3d(newX, FLY_SPEED, newZ));
-                boat.velocityDirty = true;
 
             } else if (vel.y > 0) {
                 boat.setVelocity(vel.x, 0, vel.z);
-                boat.velocityDirty = true;
             }
         });
     }

@@ -6,7 +6,6 @@ import net.minecraft.text.Text;
 
 public class ClickGuiScreen extends Screen {
 
-    // موقع وحجم القائمة
     private static final int PANEL_X = 20;
     private static final int PANEL_Y = 20;
     private static final int PANEL_WIDTH = 160;
@@ -19,18 +18,19 @@ public class ClickGuiScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        // خلفية شفافة
-        this.renderInGameBackground(context);
+        // خلفية
+        context.fillGradient(0, 0, this.width, this.height, 0xC0101010, 0xD0101010);
 
-        // رسم لوحة التحكم
         int panelHeight = PADDING + BUTTON_HEIGHT + PADDING;
+
+        // لوحة التحكم
         context.fill(PANEL_X, PANEL_Y, PANEL_X + PANEL_WIDTH, PANEL_Y + panelHeight, 0xCC1a1a2e);
 
-        // رسم شريط العنوان
+        // شريط العنوان
         context.fill(PANEL_X, PANEL_Y, PANEL_X + PANEL_WIDTH, PANEL_Y + 14, 0xFF16213e);
         context.drawTextWithShadow(textRenderer, "Boat Mod", PANEL_X + 4, PANEL_Y + 3, 0xFFFFFF);
 
-        // رسم زر الطيران
+        // زر الطيران
         boolean enabled = CustomBoatClient.flyEnabled;
         int btnY = PANEL_Y + 14 + PADDING / 2;
         int btnColor = enabled ? 0xFF2ecc71 : 0xFFe74c3c;
@@ -45,24 +45,21 @@ public class ClickGuiScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        // حساب موقع الزر
         int btnY = PANEL_Y + 14 + PADDING / 2;
         int btnX1 = PANEL_X + PADDING;
         int btnX2 = PANEL_X + PANEL_WIDTH - PADDING;
         int btnY2 = btnY + BUTTON_HEIGHT;
 
-        // التحقق من الضغط على الزر
         if (mouseX >= btnX1 && mouseX <= btnX2 && mouseY >= btnY && mouseY <= btnY2) {
             CustomBoatClient.flyEnabled = !CustomBoatClient.flyEnabled;
             return true;
         }
-
         return super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        // Right Shift = يغلق القائمة
+        // Right Shift يغلق القائمة
         if (keyCode == 344) {
             this.close();
             return true;
@@ -72,7 +69,6 @@ public class ClickGuiScreen extends Screen {
 
     @Override
     public boolean shouldPause() {
-        // ما يوقف اللعبة عند فتح القائمة
         return false;
     }
 }
